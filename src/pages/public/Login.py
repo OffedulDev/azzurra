@@ -2,6 +2,7 @@
 import sqlite3
 import shared.Database as Database
 import shared.Storage as Storage
+import time
 
 from uuid import uuid4
 from nicegui import ui
@@ -45,6 +46,19 @@ def is_user_logged_in():
     
     Storage.write_to_storage("token", None)
     return False
+
+def logout():
+    if is_user_logged_in() == False: ui.notify("Utente già sloggato vuole sloggare?", close_button="OK", type="warning"); return
+    ui.notify("Uscendo dall'account...", type="ongoing")
+    
+    user_data = get_user_data()
+    users.pop(users.index(user_data))
+    Storage.write_to_storage("token", None)
+
+    ui.notify("Sei uscito correttamente!", type="positive")
+    ui.timer(interval=3.0, callback= lambda: ui.open("/login") , once=True)
+    
+    
 
 def validate_login(Username, Password):
     Entry = Database.get_entry("accounts", "username", Username)

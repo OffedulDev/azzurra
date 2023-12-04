@@ -1,27 +1,13 @@
 # IMPORTS
 from nicegui import ui
+import pages.private.student.Root as Root
 
 # FUNCTIONS
 def render_page(data):
-    ui.query('.nicegui-content').classes("p-0")
-
-    print(data)
-    with ui.row():
+    with Root.render_page() as main_row: 
         with ui.column() as column:
-            column.classes("gap-2 border-r-2 border-r-gray min-h-screen flex flex-col")
+            column.classes("pt-2 px-6")
 
-            ui.button(icon="home", text="Dashboard").props("flat square").classes("text-black mt-3 min-w-full flex flex-col items-start")
-            ui.separator()
-            ui.button(icon="insights", text="Argomenti di Lezione").props("flat square").classes("text-black min-w-full flex flex-col items-start")
-            ui.separator()
-            ui.button(icon="checklist", text="Compiti").props("flat square").classes("text-black min-w-full flex flex-col items-start")
-            ui.separator()
-            
-
-            
-            ui.button(icon="logout", text="Logout").props("flat square").classes("text-red mt-auto mb-2 min-w-full flex flex-col items-start")
-
-        with ui.column() as column:
             ui.markdown(f"### **{data[3]}**")
             ui.table(columns=[
                 {"name": "Dato", "label": "Dato", "field": "Dato", "required": True, "align": "left"},
@@ -33,10 +19,10 @@ def render_page(data):
                 {
                     "Dato": "Classe", "Contenuto": data[2]
                 }
-            ])
+            ]).classes("h-full w-full sm:w-fit")
 
             with ui.row() as row:
-                row.classes("mt-10")
+                row.classes("mt-5 sm:mt-10")
                 ui.markdown("#### **Compiti per domani**")
 
             with ui.element("div") as container:
@@ -52,4 +38,4 @@ def render_page(data):
                     row_b.classes("flex flex-col justify-center")
                     ui.button(text="Vedi tutti", icon="arrow_forward").props("flat").classes("h-10")
             
-        
+

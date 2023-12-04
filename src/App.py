@@ -12,8 +12,7 @@ import pages.private.student.Dashboard as student_dashboard
 def main():
     if login.is_user_logged_in() == True:
         if login.get_user_data()["TYPE"] == 0:
-            student_dashboard.render_page(login.get_student_data())
-            return
+            return RedirectResponse(url="/area-studente")
         
         ui.label("Area Docente")
         return
@@ -28,12 +27,28 @@ def login_page():
     
     login.render_page()
 
+# Area Studente
+@ui.page("/area-studente")
+def area_studente_main():
+    if login.is_user_logged_in() == False:
+        return RedirectResponse(url="/")
+    
+    return RedirectResponse(url="/area-studente/dashboard")
+
+@ui.page("/area-studente/dashboard")
+def area_studente_dashboard():
+    if login.is_user_logged_in() == False:
+        return RedirectResponse(url="/")
+    
+    return student_dashboard.render_page(login.get_student_data())
+
 @ui.page("/debug")
 def debug():
-    return student_dashboard.render_page({
-        "full_name": "Mario Rossi",
-        "school_name": "Istituto Comprensivo di Lanterna",
-        "class": "1C"
-    })
+    return student_dashboard.render_page([
+        "A",
+        "Mario Rossi",
+        "Istituto Comprensivo di Lanterna",
+        "1C"
+    ])
 
 ui.run(title="QuickClass", language="it", storage_secret=uuid4())
