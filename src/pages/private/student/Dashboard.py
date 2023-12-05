@@ -1,9 +1,12 @@
 # IMPORTS
 from nicegui import ui
 import pages.private.student.Root as Root
+import pages.public.Login as Login
 
 # FUNCTIONS
-def render_page(data):
+def render_page():
+    data = Login.get_student_data()
+    
     with Root.render_page() as main_row: 
         with ui.column() as column:
             column.classes("pt-2 px-6")

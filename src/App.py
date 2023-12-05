@@ -6,6 +6,7 @@ from uuid import uuid4
 # PAGES
 import pages.public.Login as login
 import pages.private.student.Dashboard as student_dashboard
+import pages.private.student.Argomenti as argomenti_di_lezione
 
 # APP
 @ui.page("/")
@@ -40,15 +41,17 @@ def area_studente_dashboard():
     if login.is_user_logged_in() == False:
         return RedirectResponse(url="/")
     
-    return student_dashboard.render_page(login.get_student_data())
+    return student_dashboard.render_page()
+
+@ui.page("/area-studente/argomenti-di-lezione")
+def area_studente_argomenti_di_lezione():
+    if login.is_user_logged_in() == False:
+        return RedirectResponse(url="/")
+    
+    return argomenti_di_lezione.render_page()
 
 @ui.page("/debug")
 def debug():
-    return student_dashboard.render_page([
-        "A",
-        "Mario Rossi",
-        "Istituto Comprensivo di Lanterna",
-        "1C"
-    ])
+    return argomenti_di_lezione.render_page()
 
 ui.run(title="QuickClass", language="it", storage_secret=uuid4())

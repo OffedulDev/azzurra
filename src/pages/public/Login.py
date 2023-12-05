@@ -56,7 +56,7 @@ def logout():
     Storage.write_to_storage("token", None)
 
     ui.notify("Sei uscito correttamente!", type="positive")
-    ui.timer(interval=3.0, callback= lambda: ui.open("/login") , once=True)
+    ui.open("/login")
     
     
 
