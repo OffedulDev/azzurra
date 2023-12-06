@@ -7,7 +7,8 @@ def render_page():
     main_row_a = None
 
     ui.query('.nicegui-content').classes("p-0")
-    ui.query("body").style("overflow: hidden")
+    ui.query("body").style("overflow: scroll !important")
+    
     ui.add_head_html("""<style>
         .sidebar {
             display: inherit;
@@ -56,7 +57,7 @@ def render_page():
 
         # Sidebar
         with ui.column() as column:
-            column.classes("gap-2 border-r-2 border-r-gray min-h-screen sidebar")
+            column.classes("gap-2 border-r-2 border-r-gray min-h-screen sidebar fixed")
 
             ui.button(icon="home", text="Dashboard", on_click=home_clicked).props("flat square").classes("text-black mt-3 min-w-full flex flex-col items-start")
             ui.separator()

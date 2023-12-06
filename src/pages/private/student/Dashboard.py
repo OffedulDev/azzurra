@@ -2,14 +2,22 @@
 from nicegui import ui
 import pages.private.student.Root as Root
 import pages.public.Login as Login
+import pages.private.student.Compiti as Compiti
 
 # FUNCTIONS
+def truncate_string(input_string, max_length=60):
+    if len(input_string) <= max_length:
+        return input_string
+    else:
+        truncated_string = input_string[:max_length - 3] + "..."
+        return truncated_string
+
 def render_page():
     data = Login.get_student_data()
     
     with Root.render_page() as main_row: 
         with ui.column() as column:
-            column.classes("pt-2 px-6")
+            column.classes("pt-2 px-6 sm:ml-[15rem]")
 
             ui.markdown(f"### **{data[3]}**")
             ui.table(columns=[
@@ -30,15 +38,17 @@ def render_page():
 
             with ui.element("div") as container:
                 container.classes("flex flex-row gap-3")
+
+                last_compito = Compiti.get_last_compito()
                 with ui.card() as card:
                     card.classes("gap-0.5 max-w-md")
-                    ui.markdown("**LINGUA INGLESE**")
-                    ui.markdown("*Maria Sanzullo*")
+                    ui.markdown(f"**{last_compito[8]}**")
+                    ui.markdown(f"*{last_compito[2]}*")
                     ui.separator().classes("mb-2")
-                    ui.markdown("Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...")
+                    ui.markdown(truncate_string(last_compito[6], max_length=60))
                 
                 with ui.row() as row_b:
                     row_b.classes("flex flex-col justify-center")
-                    ui.button(text="Vedi tutti", icon="arrow_forward").props("flat").classes("h-10")
+                    ui.button(text="Vedi tutti", icon="arrow_forward", on_click=lambda: ui.open("/area-studente/compiti")).props("flat").classes("h-10")
             
 
