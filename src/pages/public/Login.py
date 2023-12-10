@@ -74,7 +74,13 @@ def get_student_data():
 
     student_data = Database.get_entry("students_accounts", "account_name", account_name)
     return student_data
-    
+
+def get_teacher_data():
+    user_data = get_user_data()
+    account_name = user_data["USERNAME"]
+
+    teacher_data = Database.get_entry("teachers_accounts", "account_name", account_name)
+    return teacher_data
 
 def render_page():
 

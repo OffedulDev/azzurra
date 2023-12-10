@@ -52,6 +52,10 @@ def get_last_compito():
                 }
 
     entries = Database.get_entries("assignments", conditions)
+
+    if len(entries) == 0:
+        return 0
+    
     return entries[0]
 
 def render_page():

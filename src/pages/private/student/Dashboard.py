@@ -40,12 +40,13 @@ def render_page():
                 container.classes("flex flex-row gap-3")
 
                 last_compito = Compiti.get_last_compito()
-                with ui.card() as card:
-                    card.classes("gap-0.5 max-w-md")
-                    ui.markdown(f"**{last_compito[8]}**")
-                    ui.markdown(f"*{last_compito[2]}*")
-                    ui.separator().classes("mb-2")
-                    ui.markdown(truncate_string(last_compito[6], max_length=60))
+                if not last_compito == 0:
+                    with ui.card() as card:
+                        card.classes("gap-0.5 max-w-md")
+                        ui.markdown(f"**{last_compito[8]}**")
+                        ui.markdown(f"*{last_compito[2]}*")
+                        ui.separator().classes("mb-2")
+                        ui.markdown(truncate_string(last_compito[6], max_length=60))
                 
                 with ui.row() as row_b:
                     row_b.classes("flex flex-col justify-center")
